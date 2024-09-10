@@ -2,9 +2,10 @@ import React from "react";
 
 function ProductCards(props) {
 
-    const handleClick = () => {
+    const handleAddcart = () => {
         props.addTocart(props.productDetails)
     }
+
 
     return (
         <div className="product-card">
@@ -19,7 +20,7 @@ function ProductCards(props) {
                 </p>
             </div>
 
-            <button onClick={handleClick}>
+            <button onClick={handleAddcart}>
                 Add To Cart
             </button>
         </div>

@@ -3,28 +3,39 @@ import ProductsDatas from "./Data/ProductData";
 import ProductCards from "./ProductCards";
 
 function ProductListing() {
+    const [cart, setAddCart] = useState([]);
 
 
-    const [cart, setCart] = useState([])
+    const addTocart = (data) => {
 
-    const addTocart = (product) => {
-        setCart([...cart, product])
-    }
+        const isInCart = cart.some((pro) => pro.name === data.name);
 
-
-    const handleDelete = (index) => {
-
-        const deleteAction = cart.filter((_, i) => i !== index)
-        setCart(deleteAction);
-
-    }
-
-    const productLength = cart.length;
+        if (!isInCart) {
+            setAddCart([...cart, data]);
+        } else {
+            alert("Is Already added")
+        }
 
 
-    console.log(productLength)
+    };
 
-    console.log(cart)
+    const sumList = cart.map((some) => some.price).reduce((amt, item) => {
+        return amt + item
+    }, 0)
+
+    // const totoalAmount = sumList.reduce((price, item) => {
+    //     return price + item;
+
+    // }, 0)
+
+
+    console.log(sumList)
+
+
+
+    const removeCart = (index) => {
+        setAddCart(cart.filter((_, deldata) => index !== deldata));
+    };
 
     return (
         <div>
@@ -32,7 +43,11 @@ function ProductListing() {
                 <div className="container">
                     <div className="wrapper">
                         {ProductsDatas.map((data) => (
-                            <ProductCards addTocart={addTocart} key={data.id} productDetails={data} />
+                            <ProductCards
+                                addTocart={addTocart}
+                                key={data.id}
+                                productDetails={data}
+                            />
                         ))}
                     </div>
 
@@ -40,11 +55,13 @@ function ProductListing() {
                         <div className="cart-wrapper">
                             <h3>Cart</h3>
 
-                            <p>{productLength} Item in Cart</p>
+                            <p> {cart.length} Item in Cart</p>
                         </div>
 
-                        {
-                            cart.length === 0 ? "No Item found" : <table>
+                        {cart.length === 0 ? (
+                            "No item found "
+                        ) : (
+                            <table>
                                 <tbody>
                                     <tr>
                                         <th>id</th>
@@ -54,24 +71,23 @@ function ProductListing() {
                                         <th>Action</th>
                                     </tr>
 
-                                    {
-                                        cart.map((data, index) => (
-                                            <tr key={index}>
-                                                <td>{data.id}</td>
-                                                <td>{data.brand}</td>
-                                                <td>{data.name}</td>
-                                                <td>{data.price}</td>
+                                    {cart.map((data, index) => (
+                                        <tr key={index}>
+                                            <td>{data.id}</td>
+                                            <td>{data.name}</td>
+                                            <td>{data.brand}</td>
+                                            <td>{data.price}</td>
 
-                                                <td>
-                                                    <button onClick={() => handleDelete(index)}>Delete</button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-
+                                            <td>
+                                                <button onClick={() => removeCart(index)}>
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
-                        }
+                        )}
                     </div>
                 </div>
             </section>
