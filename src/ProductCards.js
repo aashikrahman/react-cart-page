@@ -6,11 +6,13 @@ function ProductCards(props) {
         props.addTocart(props.productDetails)
     }
 
-
     return (
         <div className="product-card">
             <div className="product-image">
-                <img src={props.productDetails.photoName} alt={props.productDetails.name} />
+                <img
+                    src={props.productDetails.photoName}
+                    alt={props.productDetails.name}
+                />
             </div>
             <div className="product-content">
                 <p>{props.productDetails.brand}</p>
@@ -20,9 +22,7 @@ function ProductCards(props) {
                 </p>
             </div>
 
-            <button onClick={handleAddcart}>
-                Add To Cart
-            </button>
+            <button onClick={handleAddcart}>Add To Cart</button>
         </div>
     );
 }
